@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                      :::    :::    :::     */
-/*   Problem Number: 1620                              :+:    :+:      :+:    */
+/*   Problem Number: 10816                             :+:    :+:      :+:    */
 /*                                                    +:+    +:+        +:+   */
 /*   By: abc8325767 <boj.kr/u/abc8325767>            +#+    +#+          +#+  */
 /*                                                  +#+      +#+        +#+   */
-/*   https://boj.kr/1620                           #+#        #+#      #+#    */
-/*   Solved: 2025/08/28 23:00:26 by abc8325767    ###          ###   ##.kr    */
+/*   https://boj.kr/10816                          #+#        #+#      #+#    */
+/*   Solved: 2025/08/29 23:34:37 by abc8325767    ###          ###   ##.kr    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,33 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         
+        
+        int N = Integer.parseInt(br.readLine());
+        
+        Map<Integer, Integer> numberToCount = new HashMap<>();
+        
         StringTokenizer st = new StringTokenizer(br.readLine());
-
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        
-        Set<String> set = new LinkedHashSet<String>();
-        
-        Map<Integer, String> numberToName = new HashMap<>();
-        Map<String, Integer> nameToNumber = new HashMap<>();
-
         for(int i = 0; i < N; i++){
-            String input = br.readLine();
-            numberToName.put(i, input);
-            nameToNumber.put(input, i);
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < M; i++){
-            String input = br.readLine();
-            if(Character.isDigit(input.charAt(0))){
-                sb.append(numberToName.get(Integer.parseInt(input) - 1) + "\n");
+            int input = Integer.parseInt(st.nextToken());
+            Integer value = numberToCount.get(input);
+            if(value == null){
+                numberToCount.put(input, 1);
             } else {
-                sb.append(nameToNumber.get(input) + 1 + "\n");
+                numberToCount.put(input, value + 1);
+            }
+        }
+        
+        int M = Integer.parseInt(br.readLine());
+        
+        StringBuilder sb = new StringBuilder();
+        st = new StringTokenizer(br.readLine());
+        for(int i = 0; i < M; i++){
+            int input = Integer.parseInt(st.nextToken());
+            Integer value = numberToCount.get(input);
+            if(value == null){
+                sb.append(0 + " ");
+            } else {
+                sb.append(value + " ");
             }
         }
         bw.write(sb.toString().trim());
