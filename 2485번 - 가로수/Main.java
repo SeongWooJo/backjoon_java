@@ -22,10 +22,30 @@ public class Main {
 
         Set<Integer> set = new HashSet<Integer>();
         
+        int start = 0;
+        int previous = 0;
         for(int i = 0; i < N; i++){
-            set.add(Integer.parseInt(br.readLine()));    
+            int input = Integer.parseInt(br.readLine());
+            if(i > 0) set.add(input - previous);
+            else start = input;
+            previous = input;
         }
-        bw.write("");
+        
+        Integer[] array = set.toArray(new Integer[set.size()]);
+        Arrays.sort(array, Collections.reverseOrder());
+
+        int gcd = 0;
+        for(int elem : array) {
+            if(gcd == 0) gcd = elem;
+            else gcd = gcd(gcd, elem);
+        }
+        
+        int count = 0;
+        for(int i = start; i <= previous; i += gcd){
+            count += 1;
+        }
+
+        bw.write(count - N + "");
         bw.flush();
         bw.close();
     }
